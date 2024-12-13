@@ -1,34 +1,25 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "./App.css";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 
-function App() {
-  const [data, setData] = useState("Loading...");
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/")
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
-
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Project Dashboard</h1>
-        <p>{data}</p>
-        <div className="dashboard">
-          <div className="metric">Total Trees: 0</div>
-          <div className="metric">CO2 Offset: 0 tons</div>
-          <div className="metric">Verified Projects: 0</div>
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <div className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
         </div>
-      </header>
-    </div>
+        <Footer />
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
